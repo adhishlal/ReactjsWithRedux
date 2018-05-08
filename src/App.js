@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {connect} from "react-redux";
+import { incNumber, decNumber, resetNumber } from './actions/mathAction';
+import { setName, setAge } from './actions/userAction';
 
 class App extends Component {
 
@@ -9,6 +11,7 @@ reset()
 {
   this.props.setAge('20');
   this.props.setName('Adhish')
+  this.props.resetNumber(0);
 }
 
   render() {
@@ -26,8 +29,16 @@ reset()
         <button className="button" onClick={this.reset.bind(this)}>Reset</button>
 
         <div>
-          <p className="App-intro">The Username is: {this.props.user.name}</p>
-          <p className="App-intro">The Age is: {this.props.user.age}</p>
+<p className="App-intro">
+<button className="button" onClick={() => this.props.decNumber(1)}>-</button>
+{this.props.math.result}
+<button className="button" onClick={() => this.props.incNumber(1)}>+</button>
+</p>
+</div>
+
+        <div>
+          <p className="App-intro">The Username is: <code>{this.props.user.name}</code></p>
+          <p className="App-intro">The Age is: <code>{this.props.user.age}</code></p>
         </div>
 
 
@@ -46,17 +57,32 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return{
     setName: (name) => {
-      dispatch({
-        type: "NAME",
-        payload: name
-      });
-    },
+      dispatch(
+      setName(name)
+    );
+  },
 
     setAge: (age) => {
-      dispatch({
-        type: "AGE",
-        payload: age
-      });
+      dispatch(setAge(age)
+    );
+  },
+
+    incNumber: (number) => {
+      dispatch(
+        incNumber(number)
+      );
+    },
+
+    decNumber: (number) => {
+      dispatch(
+        decNumber(number)
+      );
+    },
+
+    resetNumber: (number) => {
+      dispatch(
+        resetNumber(number)
+      );
     }
 
 
